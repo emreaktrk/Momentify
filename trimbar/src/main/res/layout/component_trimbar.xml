@@ -1,0 +1,15 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.appyvet.rangebar.RangeBar
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/component_trimbar_rangebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:tickEnd="12"
+        custom:tickInterval="1"
+        custom:tickStart="1"/>
+
+</FrameLayout>

@@ -3,31 +3,29 @@ package com.akturk.momentify.app.trim;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.akturk.momentify.R;
-import com.coremedia.iso.IsoFile;
-import com.googlecode.mp4parser.authoring.Movie;
-import com.googlecode.mp4parser.authoring.container.mp4.MovieCreator;
+import com.akturk.trimbar.TrimBar;
 
 public class TrimActivity extends AppCompatActivity implements
-        MediaPlayer.OnErrorListener,
         MediaPlayer.OnCompletionListener,
-        ControllerOverlay.Listener {
-
-    private Uri mUri;
+        MediaPlayer.OnErrorListener,
+        TrimBar.OnSeekListener {
 
     private VideoView mVideoView;
-    private TrimControllerOverlay mController;
+    private Uri mUri;
+
+    private TrimBar mTrimBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_trim);
+
+        mTrimBar.setOnSeekListener(this);
 
         mUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.sample);
 
@@ -36,20 +34,14 @@ public class TrimActivity extends AppCompatActivity implements
         mVideoView.setVideoURI(mUri);
 
         mVideoView.start();
-        mController.showPlaying();
     }
 
     @Override
     public void onContentChanged() {
         super.onContentChanged();
 
-        mController = new TrimControllerOverlay(getApplicationContext());
-        mController.setListener(this);
-
-        ViewGroup rootView = (ViewGroup) findViewById(R.id.layout_trim_root_view);
-        rootView.addView(mController.getView());
-
         mVideoView = (VideoView) findViewById(R.id.layout_trim_video_view);
+        mTrimBar = (TrimBar) findViewById(R.id.layout_trim_trim_bar);
     }
 
     @Override
@@ -63,37 +55,17 @@ public class TrimActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onPlayPause() {
-
-    }
-
-    @Override
     public void onSeekStart() {
-
+        Toast.makeText(TrimActivity.this, "Start", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSeekMove(int time) {
-
+        mVideoView.seekTo(time * 100000);
     }
 
     @Override
-    public void onSeekEnd(int time, int trimStartTime, int trimEndTime) {
-
-    }
-
-    @Override
-    public void onShown() {
-
-    }
-
-    @Override
-    public void onHidden() {
-
-    }
-
-    @Override
-    public void onReplay() {
-
+    public void onSeekEnd(int time, int start, int end) {
+        Toast.makeText(TrimActivity.this, "End : " + " start : " + start + " end : " + end, Toast.LENGTH_SHORT).show();
     }
 }
