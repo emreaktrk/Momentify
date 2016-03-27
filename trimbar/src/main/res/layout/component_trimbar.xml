@@ -7,7 +7,7 @@
         xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/component_trimbar_rangebar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="72dp"
         custom:tickEnd="12"
         custom:tickInterval="1"
         custom:tickStart="1"/>
